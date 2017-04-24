@@ -29,7 +29,7 @@ public class App extends JFrame {
     private ArrayList<String> arrayTextDeleteList;
 
     public void Align() {
-        setTitle("App");
+//        setTitle("App");
 
         // build field panel (name)
         arrayTextNameList = new ArrayList<>();
@@ -107,7 +107,7 @@ public class App extends JFrame {
 
         // set layout for applet
 
-        JFrame f = new JFrame("Small app");
+        JFrame f = new JFrame("App Calculate Money");
         try {
             f.setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File("images\\img.jpg")))));
         } catch (IOException e) {
@@ -124,6 +124,7 @@ public class App extends JFrame {
 
         // action of the button Introduce
         acceptButton.addActionListener(e -> {
+            try{
             insertData();
             statusBar.setText(String.format("Last data introduced.-> (%s paid %s %s for %s.)", textName.getText(),
                     textQuantity.getText(), moneyCurrency, textComment.getText()));
@@ -148,6 +149,14 @@ public class App extends JFrame {
             } // end of FOR
             textAreaList.setText(String.format("List of data introduced:" + "\n" + "%s", chars));
             textAreaList.setEditable(false);
+            } // end of try
+            catch(NumberFormatException ex){
+                final JPanel panel = new JPanel();
+
+                JOptionPane.showMessageDialog(panel, "The quantity introduced is not correct, please try again.", "Incorrect quantity",
+                    JOptionPane.WARNING_MESSAGE);
+                System.err.print("The quantity introduced is not correct, please try again.");
+            }
         });
 
         // action of the button Show List
