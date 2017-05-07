@@ -11,4 +11,5 @@ You can keep track of the expenses introduced by pressing "Show List" button. If
 When all the expenses are introduced and you want to know the results, just press the "Show Results" button.
 
 # Comments
-(Last Update 07-05-2017) This is not a finished application, it is 100% functional, but it will have some changes.
+(Last Update 07-05-2017) Created by Daniel Hornos Valiente.
+This is not a finished application, it is 100% functional, but it will have some changes.
