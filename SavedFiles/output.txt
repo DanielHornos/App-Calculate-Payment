@@ -1,9 +1,9 @@
 Antonio
-50
+50.0
 drinks
 Daniel
-20
+20.0
 food
 Asia
-75
+75.0
 tickets cinema
