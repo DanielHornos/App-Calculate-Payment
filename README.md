@@ -8,8 +8,11 @@ Write the expenses one by one (Name, Quantity and Comment) and press "Add" butto
 
 You can keep track of the expenses introduced by pressing "Show List" button. If you need to make some changes in the expenses introduced you can press "Delete Data" button, and select the expenses that you would like to delete from the showed list.
 
-When all the expenses are introduced and you want to know the results, just press the "Show Results" button.
+You can also save the expenses list.
+
+When all the expenses are introduced and you want to know the results, just press "Show Results" button.
 
 # Comments
 (Last Update 07-05-2017) Created by Daniel Hornos Valiente.
-This is not a finished application, it is 100% functional, but it will have some changes.
+This is not the final version of the application, it is 100% functional but it will have some changes.
+The application includes some console print messages that are not necessary for the software to execute and that they will be remove in the final version of the software.
