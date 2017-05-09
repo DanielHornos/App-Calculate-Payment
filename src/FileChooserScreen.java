@@ -23,7 +23,6 @@ import javax.imageio.ImageIO;
 public class FileChooserScreen extends JFrame {
     // private JFrame frame = new JFrame();
     private JTextField filename = new JTextField(), dir = new JTextField();
-
     private JButton openButton, saveButton, newButton;
     private String fileNameString, filePathString, fullFileStringPath;
 
@@ -67,7 +66,6 @@ public class FileChooserScreen extends JFrame {
         // add action for de New button
         newButton.addActionListener(e -> {
             frame2.dispose();
-            // dispose();
             AppWithTables appgui = new AppWithTables();
             appgui.newTableData();
 
@@ -77,7 +75,8 @@ public class FileChooserScreen extends JFrame {
         openButton.addActionListener(e -> {
 
             /*
-             * AppWithTables appgui = new AppWithTables(); appgui.loadTableData(
+             * AppWithTables appgui = new AppWithTables(); 
+             * appgui.loadTableData(
              * "C:\\Users\\daniel.hornos\\Documents\\output.txt");
              */
 
@@ -85,13 +84,11 @@ public class FileChooserScreen extends JFrame {
             // Demonstrate "Open" dialog:
             int rVal = fileChooser.showOpenDialog(FileChooserScreen.this);
             if (rVal == JFileChooser.APPROVE_OPTION) {
-                filename.setText(fileChooser.getSelectedFile().getName());
-                dir.setText(fileChooser.getCurrentDirectory().toString());
-                fileNameString = filename.getText();
-                filePathString = dir.getText();
+                fileNameString = fileChooser.getSelectedFile().getName();
+                filePathString = fileChooser.getCurrentDirectory().toString();
+                
                 System.out.printf("The selected file is: %s%n", fileNameString);
                 System.out.printf("The selected path of the file is: %s%n", filePathString);
-                System.out.println("Test para ver si imprime");
 
                 fullFileStringPath = filePathString + File.separator + fileNameString;
                 System.out.printf("The selected full file path is: %s%n", fullFileStringPath);
@@ -101,8 +98,7 @@ public class FileChooserScreen extends JFrame {
                 appgui.loadTableData(fullFileStringPath);
             }
             if (rVal == JFileChooser.CANCEL_OPTION) {
-                filename.setText("You pressed cancel");
-                dir.setText("");
+                System.out.println("You pressed cancel");
             }
 
         }); // end of the ActionListener for OpenButton

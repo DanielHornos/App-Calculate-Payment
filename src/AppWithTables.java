@@ -32,12 +32,9 @@ public class AppWithTables extends JFrame {
     private double userQuantity = 0;
     private String paymentComment;
     private String moneyCurrency = "PLN";
-    private String fileName, filePath;
     private String fileNameString, filePathString, fullFileStringPath;
-    private JTextField filename = new JTextField(), dir = new JTextField();
-    private ArrayList<String> arrayTextNameList;
     private ArrayList<String> resultArrayList;
-    private ArrayList<String> arrayTextDeleteList;
+
 
     private JTable table;
     private DefaultTableModel model;
@@ -46,8 +43,6 @@ public class AppWithTables extends JFrame {
     public void Align() {
 
         // build field panel (name)
-        arrayTextNameList = new ArrayList<>();
-        arrayTextDeleteList = new ArrayList<>();
         nameLabel = new JLabel("Name: ");
         nameLabel.setForeground(Color.white);
         textName = new JTextField("", 10);
@@ -127,7 +122,7 @@ public class AppWithTables extends JFrame {
         buttonPanel.add(saveAsButton);
 
         // set statusBar
-        statusBar = new JLabel("Introduce data Example-> Name: Daniel; Quantity: 60; Comment: drinks");
+        statusBar = new JLabel("How to introduce data(Example)-> Name: Daniel; Quantity: 60; Comment: drinks");
         statusBar.setForeground(Color.white);
         textAreaList = new JTextArea();
         textAreaList.setEditable(false);
@@ -157,7 +152,7 @@ public class AppWithTables extends JFrame {
                 statusBar.setText(String.format("Last data introduced.-> (%s paid %s %s for %s.)", textName.getText(),
                         textQuantity.getText(), moneyCurrency, textComment.getText()));
 
-                System.out.println("Has presionado el boton Introducir.");
+                System.out.println("Add button was pressed.");
                 textName.setText("");
                 textQuantity.setText("");
                 textComment.setText("");
@@ -177,7 +172,7 @@ public class AppWithTables extends JFrame {
             catch (NumberFormatException ex) {
                 final JPanel panel = new JPanel();
 
-                JOptionPane.showMessageDialog(panel, "The quantity introduced is not correct, please try again.",
+                JOptionPane.showMessageDialog(panel, "The quantity introduced is not correct, please try again. (Example: 50.6)",
                         "Incorrect quantity", JOptionPane.WARNING_MESSAGE);
                 System.err.print("The quantity introduced is not correct, please try again.");
             }
@@ -226,7 +221,6 @@ public class AppWithTables extends JFrame {
 
             chars.setLength(0);
             for (int r = 0; r < model.getRowCount(); r++) {
-
                 chars.append(model.getValueAt(r, 0));
                 chars.append(" has to pay ");
                 chars.append(model.getValueAt(r, 1));
@@ -235,8 +229,7 @@ public class AppWithTables extends JFrame {
                 chars.append(".\n");
             } // end of FOR
 
-            textAreaList.setText(String.format("List of data introduced:" + "\n" + "%s", chars));
-
+            textAreaList.setText(String.format("List of data introduced:" + "\n" + "%s", chars));            
         });
 
         // action of the button Show results
@@ -247,7 +240,6 @@ public class AppWithTables extends JFrame {
                 chars.append(resultArrayList.get(i));
                 chars.append(".");
                 chars.append("\n");
-
             }
             JOptionPane.showMessageDialog(null, "The result is:\n" + chars, "Result", JOptionPane.PLAIN_MESSAGE);
         });
@@ -263,13 +255,10 @@ public class AppWithTables extends JFrame {
             // Demonstrate "Save" dialog:
             int rVal = c.showSaveDialog(AppWithTables.this);
             if (rVal == JFileChooser.APPROVE_OPTION) {
-                filename.setText(c.getSelectedFile().getName());
-                dir.setText(c.getCurrentDirectory().toString());
-                fileNameString = filename.getText();
-                filePathString = dir.getText();
+                fileNameString = c.getSelectedFile().getName();
+                filePathString = c.getCurrentDirectory().toString();
                 System.out.printf("The selected file is: %s%n", fileNameString);
                 System.out.printf("The selected path of the file is: %s%n", filePathString);
-                System.out.println("Test para ver si imprime");
 
                 fullFileStringPath = filePathString + File.separator + fileNameString;
                 System.out.printf("The selected full file path is: %s%n", fullFileStringPath);
@@ -277,8 +266,7 @@ public class AppWithTables extends JFrame {
                 writeToFile(fullFileStringPath);
             }
             if (rVal == JFileChooser.CANCEL_OPTION) {
-                filename.setText("You pressed cancel");
-                dir.setText("");
+                System.out.println("You pressed cancel");
             }
         });
     } // end of method Align
@@ -286,9 +274,9 @@ public class AppWithTables extends JFrame {
     public void insertData() {
         /*
          * model.addRow(new Object[] { "Antonio", "50", "drinks" });
-         * model.addRow(new Object[] { "Asia", "20", "food" }); model.addRow(new
-         * Object[] { "Vero", "95", "party" }); model.addRow(new Object[] {
-         * "Asia", "70", "tickets cinema" });
+         * model.addRow(new Object[] { "Asia", "20", "food" }); 
+         * model.addRow(new Object[] { "Vero", "95", "party" }); 
+         * model.addRow(new Object[] { "Asia", "70", "tickets cinema" });
          */
 
         String userName = textName.getText();
@@ -304,9 +292,9 @@ public class AppWithTables extends JFrame {
 
     public void calculateMoney(Map<String, HashMap<Double, String>> nameList) {
 
-        double totalpagado = 0;
-        double pagarCadaUno = 0;
-        double totalPagadoTest = 0;
+        double totalPaidAmount = 0;
+        double amountPayByEachOne = 0;
+        double totalPaidTest = 0;
 
         for (int r = 0; r < model.getRowCount(); r++) {
 
@@ -324,7 +312,7 @@ public class AppWithTables extends JFrame {
             }
         } // end of FOR
 
-        // esto se usa en App para insertar los valores en el hashMap
+        // This is used to insert the values in the hashMap
 
         ArrayList<Double> eachOnePaidAmount = new ArrayList<Double>(nameList.size());
         ArrayList<String> names = new ArrayList<>(nameList.size());
@@ -339,13 +327,12 @@ public class AppWithTables extends JFrame {
             while (child.hasNext()) {
                 Entry<Double, String> childPair = child.next();
 
-                totalpagado += childPair.getKey(); // This is the total paid by
-                                                   // every user
+                totalPaidAmount += childPair.getKey(); // This is the total paid amount by every user
 
             } // end child parent
         } // end parent while
 
-        pagarCadaUno = totalpagado / nameList.size();
+        amountPayByEachOne = totalPaidAmount / nameList.size();
 
         for (String key : nameList.keySet()) {
 
@@ -356,14 +343,14 @@ public class AppWithTables extends JFrame {
 
             eachOnePaidAmount.add(sumKeys);
             names.add(key);
-            mapPayOrGetPaid.put(key, pagarCadaUno - sumKeys);
-            amountPayOrGetPaid.add(pagarCadaUno - sumKeys);
-            totalPagadoTest += sumKeys;
+            mapPayOrGetPaid.put(key, amountPayByEachOne - sumKeys);
+            amountPayOrGetPaid.add(amountPayByEachOne - sumKeys);
+            totalPaidTest += sumKeys;
 
         } // end of outer for
-        System.out.printf("Total paid (including everybody): %s%n", totalPagadoTest);
-        pagarCadaUno = totalPagadoTest / nameList.size();
-        System.out.printf("Amount that has to be paid (by each one): %s%n", pagarCadaUno);
+        System.out.printf("Total paid (including everybody): %s%n", totalPaidTest);
+        amountPayByEachOne = totalPaidTest / nameList.size();
+        System.out.printf("Amount that has to be paid (by each one): %s%n", amountPayByEachOne);
 
         resultArrayList = new ArrayList<>();
         ArrayList<Integer> hasToPay = new ArrayList<>();
@@ -441,6 +428,7 @@ public class AppWithTables extends JFrame {
             } // end of inner FOR
         } // end of outer FOR
 
+        nameList.clear();
     } // end of the method calculateMoney
 
     public void DesignButton(JButton Button) {
@@ -456,15 +444,6 @@ public class AppWithTables extends JFrame {
         Button.setVerticalTextPosition(JButton.CENTER);
         Button.setRolloverIcon(new ImageIcon("images\\OrangeSquareButton-100px(CLICK).png"));
     } // end of the method DesignButton
-
-    public void setFileName(String filename) {
-        System.out.printf("Esto es para ver si imprime el filename desde APP: %s%n", filename);
-        this.fileName = filename;
-        System.out.printf("Esto es para ver si imprime el fileName desde APP: %s%n", fileName);
-        // getFileName();
-        // System.out.printf("Esto es para ver si imprime el getFileName() desde
-        // APP: %s%n", getFileName());
-    }
 
     public void newTableData() {
         // Create table
@@ -489,24 +468,22 @@ public class AppWithTables extends JFrame {
         model.addColumn("Comment");
 
         try {
-            // FileReader freader = new FileReader("out.txt");
             input = new Scanner(Paths.get(filePath));
-
             while (input.hasNext()) {
                 model.addRow(new Object[] { input.nextLine(), input.nextLine(), input.nextLine() });
             }
-            System.out.printf("Esto es solo una prueba para ver si se ha pasado la lista oout.txt: %s",
+            System.out.printf("This line is just a test to see if it loaded correctly the file, number of rows: %s",
                     model.getRowCount());
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
         }
-        // writeToFile("out.txt");
+
         Align();
     } // end of the method loadTableData
 
     public void writeToFile(String filePath) {
-        System.out.printf("Esto imprime el numero de filas de model:%s%n", model.getRowCount());
-        System.out.printf("Este es el fullFileStringPath impreso: %s%n", fullFileStringPath);
+        System.out.printf("This line print the number of rows of model:%s%n", model.getRowCount());
+        System.out.printf("This line print the fullFileStringPath: %s%n", fullFileStringPath);
         try {
             FileWriter fstream = new FileWriter(filePath);
             BufferedWriter out = new BufferedWriter(fstream);
@@ -518,28 +495,24 @@ public class AppWithTables extends JFrame {
             statusBar.setText("Data list was saved into the location: " + System.lineSeparator() + fullFileStringPath);
             out.close();
         } catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
+            System.err.println("There is no File selected, so user has to choose one or create new one. Error: " + e.getMessage());
             // action from Save As button
             JFileChooser c = new JFileChooser();
             // Demonstrate "Save" dialog:
             int rVal = c.showSaveDialog(AppWithTables.this);
             if (rVal == JFileChooser.APPROVE_OPTION) {
-                filename.setText(c.getSelectedFile().getName());
-                dir.setText(c.getCurrentDirectory().toString());
-                fileNameString = filename.getText();
-                filePathString = dir.getText();
+                fileNameString = c.getSelectedFile().getName();
+                filePathString = c.getCurrentDirectory().toString();
                 System.out.printf("The selected file is: %s%n", fileNameString);
                 System.out.printf("The selected path of the file is: %s%n", filePathString);
-                System.out.println("Test para ver si imprime");
 
                 fullFileStringPath = filePathString + File.separator + fileNameString;
                 System.out.printf("The selected full file path is: %s%n", fullFileStringPath);
 
-                writeToFile(fullFileStringPath); // esta no se si es necesaria
+                writeToFile(fullFileStringPath); 
             }
             if (rVal == JFileChooser.CANCEL_OPTION) {
-                filename.setText("You pressed cancel");
-                dir.setText("");
+                System.out.println("You pressed cancel");
             }
         }
     } // end of method writeToFile
