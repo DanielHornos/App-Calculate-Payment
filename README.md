@@ -15,4 +15,4 @@ When all the expenses are introduced and you want to know the results, just pres
 # Comments
 (Last Update 29-06-2017) Created by Daniel Hornos Valiente.
 This is not the final version of the application, it is 100% functional but it will have some changes.
-The application includes some console print messages that are not necessary for the software to execute and that they will be remove in the final version of the software.
+The application includes some comments and console print messages that are not necessary for the software to execute and that they will be remove in the final version of the software.
